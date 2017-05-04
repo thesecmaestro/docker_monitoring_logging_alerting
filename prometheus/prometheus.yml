@@ -24,16 +24,16 @@ scrape_configs:
     scrape_interval: 10s
     scrape_timeout: 5s
     static_configs:
-      - targets: ['10.2.2.150:9100']
-        labels: {'group': 'production'}
+      - targets: ['10.3.1.232:9100']
+        labels: {'group': 'stage'}
 
   - job_name: 'containers'
     scrape_interval: 5s
     scrape_timeout: 4s
     static_configs:
-      - targets: ['10.2.2.150:8080']
+      - targets: ['10.3.1.232:8080']
         labels:
-          group: 'production'
+          group: 'stage'
 
 
   #Will/23.08.16: dcom restart prometheus suffices to load config/rule changes
