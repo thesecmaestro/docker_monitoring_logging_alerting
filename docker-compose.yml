@@ -112,7 +112,7 @@ services:
   # Runs on your node(s) and forwards node(host) metrics to Prometheus.
   nodeexporter:
     container_name: nodeexporter
-    image: prom/node-exporter
+    image: prom/node-exporter:v0.13.0
     expose:
       - 9100
     restart: always
@@ -129,7 +129,7 @@ services:
   # Runs on your node(s) and forwards container metrics to Prometheus.
   cadvisor:
     container_name: cadvisor
-    image: google/cadvisor
+    image: google/cadvisor:v0.24.1
     ports:
       - 8080:8080
     expose:
@@ -153,7 +153,7 @@ services:
   # Storage and search backend. Gets all metrics from cAdvisor and Nodeexporter and is the backend that Grafana runs on.
   prometheus:
     container_name: prometheus
-    image: prom/prometheus
+    image: prom/prometheus:v1.4.1
     ports:
       - 9090:9090
     expose:
@@ -184,7 +184,7 @@ services:
   # Pretty frontend to explore and check out all your metrics.
   grafana:
     container_name: grafana
-    image: grafana/grafana
+    image: grafana/grafana:4.0.1
     ports:
       - 3000:3000
     expose:
@@ -210,7 +210,7 @@ services:
   # Alerting plugin wrapping Prometheus and taking care of your metric alerting needs.
   alertmanager:
     container_name: alertmanager
-    image: prom/alertmanager
+    image: prom/alertmanager:v0.5.1
     ports:
       - 9093:9093
     expose:
@@ -236,22 +236,22 @@ services:
   elastalert:
     container_name: elastalert
     build: elastalert/
-    restart: always
+#    restart: always
     volumes:
       - ./elastalert/log:/opt/log
       - ./elastalert/config:/opt/config
       - ./elastalert/rules:/opt/rules
     environment:
-      - ELASTICSEARCH_HOST=elasticsearch
+      - ELASTICSEARCH_HOST=elasticsearchhost
     links:
-      - elasticsearch:elasticsearch_host
+      - elasticsearch:elasticsearchhost
     labels:
       container_group: monitoring
-    logging:
-      driver: gelf
-      options:
-        gelf-address: udp://192.16.0.38:12201
-        labels: container_group
+#    logging:
+#      driver: gelf
+#      options:
+#        gelf-address: udp://192.16.0.38:12201
+#        labels: container_group
 
 #########################################################
 ####                   Networking                    ####
