@@ -8,3 +8,12 @@ services:
      - .:/code
   redis:
     image: "redis:alpine"
+    restart: always
+    labels:
+      container_group: testing
+    logging:
+     driver: gelf
+     options:
+       gelf-address: udp://127.0.0.1:12201
+       labels: container_group
+~
