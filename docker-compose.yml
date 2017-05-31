@@ -10,7 +10,7 @@ services:
   # Runs on your node(s) and forwards all logs to Logstash.
   filebeat:
     container_name: filebeat
-    image: prima/filebeat:5.4.0
+    image: prima/filebeat:5.3.0
     volumes:
       - ./filebeat/filebeat.yml:/filebeat.yml
     restart: always
