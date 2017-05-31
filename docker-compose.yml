@@ -10,7 +10,7 @@ services:
   # Runs on your node(s) and forwards all logs to Logstash.
   filebeat:
     container_name: filebeat
-    image: prima/filebeat:1
+    image: prima/filebeat:5.4.0
     volumes:
       - ./filebeat/filebeat.yml:/filebeat.yml
     restart: always
@@ -27,7 +27,7 @@ services:
   # Aggregates logs and forwards them to Elasticsearch.
   logstash:
     container_name: logstash
-    image: logstash:2
+    image: logstash:5.4.0
     ports:
       - 12201:12201
       - 12201:12201/udp
@@ -55,7 +55,7 @@ services:
   # Logstash configs can be a hassle. Run 'docker-compose run --rm validate-logstash-config' in order to quickly check your logstash config.
   validate-logstash-config:
     container_name: validate-logstash-config
-    image: logstash:2
+    image: logstash:5.4.0
     volumes:
       - ./logstash/config:/config
     command: logstash --configtest --config /config
@@ -65,7 +65,7 @@ services:
   # Storage and search backend. Gets all logs from Logstash and is the backend that Kibana runs on.
   elasticsearch:
     container_name: elasticsearch
-    image: elasticsearch:2
+    image: elasticsearch:5.4.0
     ports:
       - 9200:9200
     expose:
@@ -112,7 +112,7 @@ services:
   # Runs on your node(s) and forwards node(host) metrics to Prometheus.
   nodeexporter:
     container_name: nodeexporter
-    image: prom/node-exporter:v0.13.0
+    image: prom/node-exporter:v0.14.0
     expose:
       - 9100
     restart: always
@@ -129,7 +129,7 @@ services:
   # Runs on your node(s) and forwards container metrics to Prometheus.
   cadvisor:
     container_name: cadvisor
-    image: google/cadvisor:v0.24.1
+    image: google/cadvisor:v0.25.0
     ports:
       - 8080:8080
     expose:
@@ -153,7 +153,7 @@ services:
   # Storage and search backend. Gets all metrics from cAdvisor and Nodeexporter and is the backend that Grafana runs on.
   prometheus:
     container_name: prometheus
-    image: prom/prometheus:v1.4.1
+    image: prom/prometheus:v1.6.3
     ports:
       - 9090:9090
     expose:
@@ -184,7 +184,7 @@ services:
   # Pretty frontend to explore and check out all your metrics.
   grafana:
     container_name: grafana
-    image: grafana/grafana:4.0.1
+    image: grafana/grafana:4.3.2
     ports:
       - 3000:3000
     expose:
